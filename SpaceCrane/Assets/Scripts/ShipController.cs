@@ -8,6 +8,7 @@ public class ShipController : MonoBehaviour
     public float speed;
     public float distance;
     public float zoomSpeed;
+    public float rotationSpeed;
 
     private Rigidbody rb;
     private Vector3 offset;
@@ -31,12 +32,13 @@ public class ShipController : MonoBehaviour
         float moveZ = Input.GetAxis("ZAxis");
         float roll = Input.GetAxis("Roll");
 
+        //ship movement
         Vector3 movementH = transform.right * moveH;
         Vector3 movementV = transform.forward * moveV;
         Vector3 movementZ = transform.up * moveZ;
         rb.velocity = (movementH + movementV + movementZ) * speed * Time.deltaTime;
 
-        zR += roll;
+        zR = roll;
 
         RaycastHit hit;
         Physics.Raycast(transform.position, transform.forward, out hit);
@@ -49,9 +51,9 @@ public class ShipController : MonoBehaviour
 
     void LateUpdate()
     {
-        UpdateCargoPosition();
-        transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
-        transform.Rotate(0, 0, zR);
+        UpdateCargoPosition(); // cargo movement (x and y rotation)
+        transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position, transform.up); //look at cargo
+        transform.Rotate(0, 0, zR); //roll
     }
 
     void UpdateCargoPosition()
@@ -60,12 +62,13 @@ public class ShipController : MonoBehaviour
         float moveH = Input.GetAxis("Vertical");
         float zoom = Input.GetAxis("Zoom");
 
-        xR -= moveH;
-        yR += moveV;
-        xR = Mathf.Clamp(xR, -94, 84);
-        Quaternion xRotation = Quaternion.AngleAxis(xR, new Vector3(1, 0, 0));
-        Quaternion yRotation = Quaternion.AngleAxis(yR, new Vector3(0, 1, 0));
+        xR -= moveH * Time.deltaTime * rotationSpeed;
+        yR += moveV * Time.deltaTime * rotationSpeed;
+        //xR = Mathf.Clamp(xR, -94, 84);
+        Quaternion yRotation = Quaternion.AngleAxis(yR, transform.up);
+        Quaternion xRotation = Quaternion.AngleAxis(xR, transform.right);
         //Quaternion zRotation = Quaternion.AngleAxis(zR, new Vector3(0, 0, 1));
+        //Vector3 newOffset = new Vector3(0, 0, 1);
         Vector3 newOffset = offset;
         newOffset = xRotation * newOffset;
         newOffset = yRotation * newOffset;
@@ -75,6 +78,6 @@ public class ShipController : MonoBehaviour
         distance = Mathf.Clamp(distance, 5, 25);
         newOffset *= distance;
         cargo.transform.position = transform.position + newOffset;
-        cargo.transform.rotation = Quaternion.LookRotation(-1*(cargo.transform.position - transform.position));
+        //cargo.transform.rotation = Quaternion.LookRotation(-1*(cargo.transform.position - transform.position));
     }
 }
