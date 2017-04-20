@@ -62,16 +62,17 @@ public class ShipController : MonoBehaviour
         float moveH = Input.GetAxis("Vertical");
         float zoom = Input.GetAxis("Zoom");
 
-        xR -= moveH * Time.deltaTime * rotationSpeed;
-        yR += moveV * Time.deltaTime * rotationSpeed;
+        xR = -1 * moveH * Time.deltaTime * rotationSpeed;
+        yR = moveV * Time.deltaTime * rotationSpeed;
         //xR = Mathf.Clamp(xR, -94, 84);
         Quaternion yRotation = Quaternion.AngleAxis(yR, transform.up);
         Quaternion xRotation = Quaternion.AngleAxis(xR, transform.right);
         //Quaternion zRotation = Quaternion.AngleAxis(zR, new Vector3(0, 0, 1));
         //Vector3 newOffset = new Vector3(0, 0, 1);
-        Vector3 newOffset = offset;
-        newOffset = xRotation * newOffset;
+        Vector3 newOffset = new Vector3();
+        newOffset = -1 * (transform.position - cargo.transform.position);
         newOffset = yRotation * newOffset;
+        newOffset = xRotation * newOffset;
         //newOffset = zRotation * newOffset;
         newOffset.Normalize();
         distance += zoom * zoomSpeed * Time.deltaTime;
