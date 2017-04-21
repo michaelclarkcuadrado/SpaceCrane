@@ -9,7 +9,6 @@ using UnityEngine;
 public class CargoController : MonoBehaviour {
 
 	public GameObject cargoGoalSpace;
-	private Rigidbody rb;
 	private Vector3 initialPosition;
 	private Quaternion initialRotation;
 	private bool isAchieved;
@@ -20,12 +19,12 @@ public class CargoController : MonoBehaviour {
 		isPickupable = true;
 		initialPosition = gameObject.transform.position;
 		initialRotation = gameObject.transform.rotation;
-		rb = GetComponent<Rigidbody> ();
 	}
 
 	public void respawnCargo(){
 		if (!isAchieved) {
 			gameObject.SetActive (false);
+			isPickupable = true;
 			gameObject.transform.position = initialPosition;
 			gameObject.transform.rotation = initialRotation;
 			gameObject.SetActive (true);
