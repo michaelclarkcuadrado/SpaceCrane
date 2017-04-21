@@ -63,19 +63,23 @@ public class ShipController : MonoBehaviour
     {
 		if (isHoldingCargo)
         {
-            UpdateCargoPosition();
+            UpdateRotation(offset);
             transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
             transform.Rotate(0, 0, zR);
-        }
-		if (isHoldingCargo) {
 			Vector3[] segment = new Vector3[2];
 			segment [0] = cargoCrane.transform.position;
 			segment [1] = cargo.transform.position;
 			lr.SetPositions (segment);
 		}
+        else
+        {
+            UpdateRotation(transform.forward);
+            transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
+            transform.Rotate(0, 0, zR);
+        }
     }
 
-    void UpdateCargoPosition()
+    void UpdateRotation(Vector3 forward)
     {
         float moveV = Input.GetAxis("Horizontal");
         float moveH = Input.GetAxis("Vertical");
@@ -87,7 +91,7 @@ public class ShipController : MonoBehaviour
         Quaternion xRotation = Quaternion.AngleAxis(xR, transform.right);
         //Quaternion zRotation = Quaternion.AngleAxis(zR, new Vector3(0, 0, 1));
         Vector3 newOffset = new Vector3();
-        newOffset = offset;
+        newOffset = forward;
         newOffset = xRotation * newOffset;
         newOffset = yRotation * newOffset;
         //newOffset = zRotation * newOffset;
@@ -120,7 +124,7 @@ public class ShipController : MonoBehaviour
 			Debug.Log (cargo.GetComponent<CargoController>());
 			if (cargo.GetComponent<CargoController> ().putDown ()) {
 				Debug.Log ("HIT");
-				cargo = null;
+                cargo = initialCargo;
 				isHoldingCargo = false;
 			}
 		}
