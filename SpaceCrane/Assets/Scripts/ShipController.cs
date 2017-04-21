@@ -10,6 +10,7 @@ public class ShipController : MonoBehaviour
     public float speed;
     public float distance;
     public float zoomSpeed;
+    public float rotationSpeed;
 
 	private GameObject cargo;
     private Rigidbody rb;
@@ -60,11 +61,12 @@ public class ShipController : MonoBehaviour
 
     void LateUpdate()
     {
-        UpdateCargoPosition();
-		if (isHoldingCargo) {
-			transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
-		}
-        transform.Rotate(0, 0, zR);
+		if (isHoldingCargo)
+        {
+            UpdateCargoPosition();
+            transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
+            transform.Rotate(0, 0, zR);
+        }
 		if (isHoldingCargo) {
 			Vector3[] segment = new Vector3[2];
 			segment [0] = cargoCrane.transform.position;
@@ -79,13 +81,13 @@ public class ShipController : MonoBehaviour
         float moveH = Input.GetAxis("Vertical");
         float zoom = Input.GetAxis("Zoom");
 
-        xR -= moveH;
-        yR += moveV;
-        xR = Mathf.Clamp(xR, -94, 84);
-        Quaternion xRotation = Quaternion.AngleAxis(xR, new Vector3(1, 0, 0));
-        Quaternion yRotation = Quaternion.AngleAxis(yR, new Vector3(0, 1, 0));
+        xR = -1 * moveH * Time.deltaTime * rotationSpeed;
+        yR = moveV * Time.deltaTime * rotationSpeed;
+        Quaternion yRotation = Quaternion.AngleAxis(yR, transform.up);
+        Quaternion xRotation = Quaternion.AngleAxis(xR, transform.right);
         //Quaternion zRotation = Quaternion.AngleAxis(zR, new Vector3(0, 0, 1));
-        Vector3 newOffset = offset;
+        Vector3 newOffset = new Vector3();
+        newOffset = offset;
         newOffset = xRotation * newOffset;
         newOffset = yRotation * newOffset;
         //newOffset = zRotation * newOffset;
@@ -94,7 +96,9 @@ public class ShipController : MonoBehaviour
         distance = Mathf.Clamp(distance, 5, 25);
         newOffset *= distance;
         cargo.transform.position = transform.position + newOffset;
-        cargo.transform.rotation = Quaternion.LookRotation(-1*(cargo.transform.position - transform.position));
+        //print(cargo.transform.position.ToString());
+        offset = newOffset;
+        //cargo.transform.rotation = Quaternion.LookRotation(-1*(cargo.transform.position - transform.position));
     }
 
 	public void dropOrPickupCargo(){
@@ -116,7 +120,7 @@ public class ShipController : MonoBehaviour
 			Debug.Log (cargo.GetComponent<CargoController>());
 			if (cargo.GetComponent<CargoController> ().putDown ()) {
 				Debug.Log ("HIT");
-				cargo = initialCargo;
+				cargo = null;
 				isHoldingCargo = false;
 			}
 		}
