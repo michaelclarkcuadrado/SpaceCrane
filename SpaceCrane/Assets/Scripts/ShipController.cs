@@ -111,15 +111,20 @@ public class ShipController : MonoBehaviour
 		if (!isHoldingCargo) {
 			Debug.Log ("Pickup cargo");
 			RaycastHit hit;
-			Physics.Raycast(transform.position, transform.forward, out hit);
-			GameObject newCargo = hit.transform.gameObject;
-			if (newCargo.GetComponent<CargoController> () != null) {
-				CargoController cargoCont = newCargo.GetComponent<CargoController> ();
-				if (cargoCont.pickup ()) {
-					cargo = newCargo;
-					isHoldingCargo = true;
-				}
-			}
+            if (Physics.Raycast(transform.position, transform.forward, out hit))
+            {
+                GameObject newCargo = hit.transform.gameObject;
+                distance = hit.distance;
+                if (newCargo.GetComponent<CargoController>() != null)
+                {
+                    CargoController cargoCont = newCargo.GetComponent<CargoController>();
+                    if (cargoCont.pickup())
+                    {
+                        cargo = newCargo;
+                        isHoldingCargo = true;
+                    }
+                }
+            }
 		} else {
 			Debug.Log (cargo.GetComponent<CargoController>());
 			if (cargo.GetComponent<CargoController> ().putDown ()) {
