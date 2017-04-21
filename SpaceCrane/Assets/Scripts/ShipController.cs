@@ -22,11 +22,7 @@ public class ShipController : MonoBehaviour
 
     // Use this for initialization
     void Start () {
-		//true for development. Eventually cargo should be private and null for init
 		cargo = initialCargo;
-		cargo.GetComponent<CargoController> ().pickup();
-		isHoldingCargo = true;
-
         offset = -1*(transform.position - cargo.transform.position);
         xR = 0;
         yR = 0;
@@ -65,7 +61,9 @@ public class ShipController : MonoBehaviour
     void LateUpdate()
     {
         UpdateCargoPosition();
-        transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
+		if (isHoldingCargo) {
+			transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
+		}
         transform.Rotate(0, 0, zR);
 		if (isHoldingCargo) {
 			Vector3[] segment = new Vector3[2];
