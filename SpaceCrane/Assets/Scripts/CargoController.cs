@@ -42,7 +42,6 @@ public class CargoController : MonoBehaviour {
 	}
 
 	public bool putDown(){
-		Debug.Log ("Put down");
 		if (!isPickupable) {
 			isPickupable = true;
 			return true;

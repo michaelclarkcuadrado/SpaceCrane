@@ -15,6 +15,10 @@ public class ShipController : MonoBehaviour
     private Rigidbody rb;
 	private LineRenderer lr;
     private Vector3 offset;
+	private float cameraShakeTimeLeft;
+	private Transform originalCameraPos;
+	Vector3 beforeShakeCameraPos;
+	private bool isCameraShaking;
     private float xR;
     private float yR;
     private float zR;
@@ -35,6 +39,15 @@ public class ShipController : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
+		//handle camera shake effect
+		if(isCameraShaking){
+			transform.localPosition = beforeShakeCameraPos + Random.insideUnitSphere * 0.7f;
+			cameraShakeTimeLeft -= Time.deltaTime;
+			if (cameraShakeTimeLeft < 0.0f) {
+				isCameraShaking = false;
+			}
+		}
+
         float moveH = Input.GetAxis("HorizontalAD");
         float moveV = Input.GetAxis("VerticalSW");
         float moveZ = Input.GetAxis("ZAxis");
@@ -55,14 +68,23 @@ public class ShipController : MonoBehaviour
 		//check if connection is broken
 		if (isHoldingCargo) {
 			RaycastHit hit;
-			Physics.Raycast(transform.position, transform.forward, out hit);
-			if (hit.transform.gameObject != cargo)
-			{
-				cargo.GetComponent<CargoController> ().respawnCargo ();
-				dropOrPickupCargo ();
+			if (Physics.Raycast (transform.position, transform.forward, out hit)) {
+				if (hit.transform.gameObject != cargo) {
+					Debug.Log (hit.transform.gameObject.name);
+					CargoController temp = cargo.GetComponent<CargoController> ();
+					dropOrPickupCargo ();
+					temp.respawnCargo ();
+					cameraShake (0.5f);
+				}
 			}
 		}
     }
+
+	void cameraShake(float duration){
+		isCameraShaking = true;
+		cameraShakeTimeLeft = duration;
+		beforeShakeCameraPos = transform.localPosition;
+	}
 
     void LateUpdate() {
 		if (isHoldingCargo) {
@@ -99,9 +121,9 @@ public class ShipController : MonoBehaviour
         //newOffset = zRotation * newOffset;
         newOffset.Normalize();
         distance += zoom * zoomSpeed * Time.deltaTime;
-        distance = Mathf.Clamp(distance, 5, 25);
+		distance = Mathf.Clamp(distance, 5, 25);
         newOffset *= distance;
-        cargo.transform.position = transform.position + newOffset;
+		cargo.transform.position = transform.position + newOffset;
         //print(cargo.transform.position.ToString());
         offset = newOffset;
         //cargo.transform.rotation = Quaternion.LookRotation(-1*(cargo.transform.position - transform.position));
@@ -111,7 +133,6 @@ public class ShipController : MonoBehaviour
 		//if is not holding object, pick up object in crosshairs
 		//if is holding, drop cargo
 		if (!isHoldingCargo) {
-			Debug.Log ("Pickup cargo");
 			RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward, out hit))
             {
