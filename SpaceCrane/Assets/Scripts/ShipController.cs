@@ -23,6 +23,7 @@ public class ShipController : MonoBehaviour
     private float yR;
     private float zR;
 	private bool isHoldingCargo;
+    private bool movementEnabled;
 
     // Use this for initialization
 	//cargo crane is set to cargo when you are not holding anything to allow for regular first person movement
@@ -35,36 +36,42 @@ public class ShipController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 		lr = cargoCrane.GetComponent<LineRenderer> ();
 		lr.positionCount = 0;
+        movementEnabled = true;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		//handle camera shake effect
-		if(isCameraShaking){
-			transform.localPosition = beforeShakeCameraPos + Random.insideUnitSphere * 0.7f;
-			cameraShakeTimeLeft -= Time.deltaTime;
-			if (cameraShakeTimeLeft < 0.0f) {
-				isCameraShaking = false;
-			}
-		}
 
-        float moveH = Input.GetAxis("HorizontalAD");
-        float moveV = Input.GetAxis("VerticalSW");
-        float moveZ = Input.GetAxis("ZAxis");
-        float roll = Input.GetAxis("Roll");
+    // Update is called once per frame
+    void Update()
+    {
+        //handle camera shake effect
+        if (isCameraShaking)
+        {
+            transform.localPosition = beforeShakeCameraPos + Random.insideUnitSphere * 0.7f;
+            cameraShakeTimeLeft -= Time.deltaTime;
+            if (cameraShakeTimeLeft < 0.0f)
+            {
+                isCameraShaking = false;
+            }
+        }
+        if (movementEnabled)
+        {
+            float moveH = Input.GetAxis("HorizontalAD");
+            float moveV = Input.GetAxis("VerticalSW");
+            float moveZ = Input.GetAxis("ZAxis");
+            float roll = Input.GetAxis("Roll");
 
-        Vector3 movementH = transform.right * moveH;
-        Vector3 movementV = transform.forward * moveV;
-        Vector3 movementZ = transform.up * moveZ;
-        rb.velocity = (movementH + movementV + movementZ) * speed * Time.deltaTime;
+            Vector3 movementH = transform.right * moveH;
+            Vector3 movementV = transform.forward * moveV;
+            Vector3 movementZ = transform.up * moveZ;
+            rb.velocity = (movementH + movementV + movementZ) * speed * Time.deltaTime;
 
-        zR += roll;
+            zR += roll;
 
-		//handle cargo interaction
-		if (Input.GetKeyDown (KeyCode.P)) {
-			dropOrPickupCargo ();
-		}
-
+            //handle cargo interaction
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                dropOrPickupCargo();
+            }
+        }
 
     }
 
@@ -74,38 +81,42 @@ public class ShipController : MonoBehaviour
 		beforeShakeCameraPos = transform.localPosition;
 	}
 
-    void LateUpdate() {
-        if (isHoldingCargo)
+    void LateUpdate()
+    {
+        if (movementEnabled)
         {
-            UpdateRotation(offset);
-            transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
-            transform.Rotate(0, 0, zR);
-            //draw laser
-            Vector3[] segment = new Vector3[2];
-            segment[0] = cargoCrane.transform.position;
-            segment[1] = cargo.transform.position;
-            lr.SetPositions(segment);
-
-            //check if connection is broken
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit))
+            if (isHoldingCargo)
             {
-                if (hit.transform.gameObject != cargo)
-                {
-                    Debug.Log(hit.transform.gameObject.name);
-                    CargoController temp = cargo.GetComponent<CargoController>();
-                    dropOrPickupCargo();
-                    temp.respawnCargo();
-                    cameraShake(0.5f);
-                }
-            }
+                UpdateRotation(offset);
+                transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
+                transform.Rotate(0, 0, zR);
+                //draw laser
+                Vector3[] segment = new Vector3[2];
+                segment[0] = cargoCrane.transform.position;
+                segment[1] = cargo.transform.position;
+                lr.SetPositions(segment);
 
-        }
-        else
-        {
-            UpdateRotation(transform.forward);
-            transform.rotation = Quaternion.LookRotation(offset);
-            transform.Rotate(0, 0, zR);
+                //check if connection is broken
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, transform.forward, out hit))
+                {
+                    if (hit.transform.gameObject != cargo)
+                    {
+                        Debug.Log(hit.transform.gameObject.name);
+                        CargoController temp = cargo.GetComponent<CargoController>();
+                        dropOrPickupCargo();
+                        temp.respawnCargo();
+                        cameraShake(0.5f);
+                    }
+                }
+
+            }
+            else
+            {
+                UpdateRotation(transform.forward);
+                transform.rotation = Quaternion.LookRotation(offset);
+                transform.Rotate(0, 0, zR);
+            }
         }
     }
 
@@ -165,4 +176,9 @@ public class ShipController : MonoBehaviour
 			}
 		}
 	}
+
+    public void setMovementEnabled(bool set = true)
+    {
+        movementEnabled = set;
+    }
 }
