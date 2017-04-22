@@ -57,14 +57,14 @@ public class ShipController : MonoBehaviour
             float moveH = Input.GetAxis("HorizontalAD");
             float moveV = Input.GetAxis("VerticalSW");
             float moveZ = Input.GetAxis("ZAxis");
-            float roll = Input.GetAxis("Roll");
+            float roll = -1 * Input.GetAxis("Roll");
 
             Vector3 movementH = transform.right * moveH;
             Vector3 movementV = transform.forward * moveV;
             Vector3 movementZ = transform.up * moveZ;
             rb.velocity = (movementH + movementV + movementZ) * speed * Time.deltaTime;
 
-            zR += roll;
+            zR = roll*rotationSpeed*Time.deltaTime;
 
             //handle cargo interaction
             if (Input.GetKeyDown(KeyCode.P))
@@ -75,11 +75,12 @@ public class ShipController : MonoBehaviour
 
     }
 
-	void cameraShake(float duration){
+	public void cameraShake(float duration){
 		isCameraShaking = true;
 		cameraShakeTimeLeft = duration;
 		beforeShakeCameraPos = transform.localPosition;
 	}
+
 
     void LateUpdate()
     {
@@ -88,7 +89,7 @@ public class ShipController : MonoBehaviour
             if (isHoldingCargo)
             {
                 UpdateRotation(offset);
-                transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
+                transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position, transform.up);
                 transform.Rotate(0, 0, zR);
                 //draw laser
                 Vector3[] segment = new Vector3[2];
@@ -114,7 +115,7 @@ public class ShipController : MonoBehaviour
             else
             {
                 UpdateRotation(transform.forward);
-                transform.rotation = Quaternion.LookRotation(offset);
+                transform.rotation = Quaternion.LookRotation(offset, transform.up);
                 transform.Rotate(0, 0, zR);
             }
         }
