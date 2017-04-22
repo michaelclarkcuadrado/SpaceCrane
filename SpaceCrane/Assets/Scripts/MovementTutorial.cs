@@ -8,6 +8,8 @@ public class MovementTutorial : MonoBehaviour {
     public GameObject textObject;
     public GameObject firstDoor;
     public GameObject lastDoor;
+    public GameObject triggerArea1;
+    public GameObject triggerArea2;
 
     private ShipController sc;
     private Text text;
@@ -43,7 +45,7 @@ public class MovementTutorial : MonoBehaviour {
     {  
         text.text = "";
         yield return new WaitForSeconds(1);
-        for (int i = 22; i < script1.Length; i++)
+        for (int i = 0; i < script1.Length; i++)
         {
             print("Displaying text# " + i);
             text.text = script1[i];
