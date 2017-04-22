@@ -75,36 +75,36 @@ public class ShipController : MonoBehaviour
 	}
 
     void LateUpdate() {
-		if (isHoldingCargo) {
+        if (isHoldingCargo)
+        {
             UpdateRotation(offset);
             transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
             transform.Rotate(0, 0, zR);
-			//draw laser
-			Vector3[] segment = new Vector3[2];
-			segment [0] = cargoCrane.transform.position;
-			segment [1] = cargo.transform.position;
-			lr.SetPositions (segment);      
-            
+            //draw laser
+            Vector3[] segment = new Vector3[2];
+            segment[0] = cargoCrane.transform.position;
+            segment[1] = cargo.transform.position;
+            lr.SetPositions(segment);
+
             //check if connection is broken
-            if (isHoldingCargo)
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit))
             {
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, transform.forward, out hit))
+                if (hit.transform.gameObject != cargo)
                 {
-                    if (hit.transform.gameObject != cargo)
-                    {
-                        Debug.Log(hit.transform.gameObject.name);
-                        CargoController temp = cargo.GetComponent<CargoController>();
-                        dropOrPickupCargo();
-                        temp.respawnCargo();
-                        cameraShake(0.5f);
-                    }
+                    Debug.Log(hit.transform.gameObject.name);
+                    CargoController temp = cargo.GetComponent<CargoController>();
+                    dropOrPickupCargo();
+                    temp.respawnCargo();
+                    cameraShake(0.5f);
                 }
             }
+
         }
-        else {
+        else
+        {
             UpdateRotation(transform.forward);
-            transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
+            transform.rotation = Quaternion.LookRotation(offset);
             transform.Rotate(0, 0, zR);
         }
     }
@@ -128,7 +128,10 @@ public class ShipController : MonoBehaviour
         distance += zoom * zoomSpeed * Time.deltaTime;
 		distance = Mathf.Clamp(distance, 5, 25);
         newOffset *= distance;
-		cargo.transform.position = transform.position + newOffset;
+        if (isHoldingCargo)
+        {
+            cargo.transform.position = transform.position + newOffset;
+        }
         //print(cargo.transform.position.ToString());
         offset = newOffset;
         //cargo.transform.rotation = Quaternion.LookRotation(-1*(cargo.transform.position - transform.position));
@@ -142,14 +145,13 @@ public class ShipController : MonoBehaviour
             if (Physics.Raycast(transform.position, transform.forward, out hit))
             {
                 GameObject newCargo = hit.transform.gameObject;
-                distance = hit.distance;
+                distance = (hit.transform.position - transform.position).magnitude;
                 if (newCargo.GetComponent<CargoController>() != null)
                 {
                     CargoController cargoCont = newCargo.GetComponent<CargoController>();
                     if (cargoCont.pickup())
                     {
                         cargo = newCargo;
-						cargoCrane.transform.position = new Vector3 (0, -1, 0);
 						lr.positionCount = 2;
                         isHoldingCargo = true;
                     }
