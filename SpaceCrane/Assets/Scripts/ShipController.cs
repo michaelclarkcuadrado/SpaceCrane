@@ -65,19 +65,7 @@ public class ShipController : MonoBehaviour
 			dropOrPickupCargo ();
 		}
 
-		//check if connection is broken
-		if (isHoldingCargo) {
-			RaycastHit hit;
-			if (Physics.Raycast (transform.position, transform.forward, out hit)) {
-				if (hit.transform.gameObject != cargo) {
-					Debug.Log (hit.transform.gameObject.name);
-					CargoController temp = cargo.GetComponent<CargoController> ();
-					dropOrPickupCargo ();
-					temp.respawnCargo ();
-					cameraShake (0.5f);
-				}
-			}
-		}
+
     }
 
 	void cameraShake(float duration){
@@ -95,8 +83,25 @@ public class ShipController : MonoBehaviour
 			Vector3[] segment = new Vector3[2];
 			segment [0] = cargoCrane.transform.position;
 			segment [1] = cargo.transform.position;
-			lr.SetPositions (segment);
-		}
+			lr.SetPositions (segment);      
+            
+            //check if connection is broken
+            if (isHoldingCargo)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, transform.forward, out hit))
+                {
+                    if (hit.transform.gameObject != cargo)
+                    {
+                        Debug.Log(hit.transform.gameObject.name);
+                        CargoController temp = cargo.GetComponent<CargoController>();
+                        dropOrPickupCargo();
+                        temp.respawnCargo();
+                        cameraShake(0.5f);
+                    }
+                }
+            }
+        }
         else {
             UpdateRotation(transform.forward);
             transform.rotation = Quaternion.LookRotation(cargo.transform.position - transform.position);
