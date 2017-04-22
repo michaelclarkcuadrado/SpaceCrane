@@ -142,7 +142,7 @@ public class ShipController : MonoBehaviour
 		//if is holding, drop cargo
 		if (!isHoldingCargo) {
 			RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 25))
             {
                 GameObject newCargo = hit.transform.gameObject;
                 distance = (hit.transform.position - transform.position).magnitude;
