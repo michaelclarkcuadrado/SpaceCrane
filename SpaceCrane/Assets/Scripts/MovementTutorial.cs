@@ -22,15 +22,15 @@ public class MovementTutorial : MonoBehaviour {
     "What's that? You don't even know the controls?", "Wow, HR is really getting sloppy...", "It's okay, I'll teach you.", "The arrow keys can be used to look around.",
     "Use W and S to move forward and backwards.", "A and D will move you side to side.", "R and F will move you upwards and downwards",
     "If you want to roll, use Q and E", "And remember, all controls are relative to your current orientation.", "In space there's no such thing as up or down!",
-    "Now that you know how to fly, it's time to complete our training course.", "Head through the door to continute." };
+    "And, if you ever forget these controls, they can all be found in the pause menu.", "Now that you know how to fly, it's time to complete our training course.", "Head through the door to continute." };
 
-    private float[] textTime = { 2, 3, 3.5f, 2, 3, 2, 4, 4, 7f, 2, 3, 5, 3, 2, 2, 8, 8, 8, 8, 6, 6, 4, 4, 4 };
+    private float[] textTime = { 2, 3, 3.5f, 2, 3, 2, 4, 4, 7f, 2, 3, 5, 3, 2, 2, 8, 8, 8, 8, 8, 6, 6, 4, 4, 4 };
 	// Use this for initialization
 	void Start () {
         sc = player.GetComponent<ShipController>();
         text = textObject.GetComponent<Text>();
 
-        movementEnabled = true;
+        movementEnabled = false;
 
         StartCoroutine(tutorial());
 
@@ -44,10 +44,11 @@ public class MovementTutorial : MonoBehaviour {
     IEnumerator tutorial()
     {  
         text.text = "";
-        yield return new WaitForSeconds(1);
-        for (int i = 0; i < script1.Length; i++)
+        yield return new WaitForSeconds(2);
+        for (int i = 1; i < script1.Length; i++)
         {
             print("Displaying text# " + i);
+            print(script1[i]);
             text.text = script1[i];
             switch (i)
             {
@@ -62,10 +63,10 @@ public class MovementTutorial : MonoBehaviour {
                     StartCoroutine(moveDoor(firstDoor, new Vector3(40, -20, 60), 4));
                     break;
                 default:
-                    text.text = "";
                     break;
 
             }
+            print(textTime[i]);
             yield return new WaitForSeconds(textTime[i]);
             //yield return new WaitForSeconds(0);
             text.text = "";

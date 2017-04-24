@@ -133,8 +133,8 @@ public class ShipController : MonoBehaviour
         //Quaternion zRotation = Quaternion.AngleAxis(zR, new Vector3(0, 0, 1));
         Vector3 newOffset = new Vector3();
         newOffset = forward;
-        newOffset = xRotation * newOffset;
         newOffset = yRotation * newOffset;
+        newOffset = xRotation * newOffset;
         //newOffset = zRotation * newOffset;
         newOffset.Normalize();
         distance += zoom * zoomSpeed * Time.deltaTime;
