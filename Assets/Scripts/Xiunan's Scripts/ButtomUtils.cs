@@ -11,13 +11,7 @@ public class ButtomUtils : MonoBehaviour {
     //Loads the first level 
     public void StartPressed()
     {
-        SceneManager.LoadScene(1);
-    }
-
-    //Loads the Main Level
-    public void MainPressed()
-    {
-        SceneManager.LoadScene(0);
+		GameController.instance.bumpLevel ();
     }
 
     //Exits current Panel and back to main menu
@@ -37,6 +31,7 @@ public class ButtomUtils : MonoBehaviour {
     //Exits the game
     public void ExitGame()
     {
+		Debug.Log ("Game exited.");
         Application.Quit();
     }
 }
