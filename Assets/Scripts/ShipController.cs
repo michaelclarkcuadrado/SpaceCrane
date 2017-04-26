@@ -7,9 +7,12 @@ public class ShipController : MonoBehaviour
     
 	public GameObject cargoCrane;
     public float speed;
-    public float distance;
+    public float distanceToHeldCargo;
     public float zoomSpeed;
     public float rotationSpeed;
+	public float cargoPickupDistance;
+	public float cargoMinDistanceHeld;
+	public float cargoMaxDistanceHeld;
 
 	private GameObject cargo;
     private Rigidbody rb;
@@ -137,9 +140,9 @@ public class ShipController : MonoBehaviour
         newOffset = xRotation * newOffset;
         //newOffset = zRotation * newOffset;
         newOffset.Normalize();
-        distance += zoom * zoomSpeed * Time.deltaTime;
-		distance = Mathf.Clamp(distance, 5, 25);
-        newOffset *= distance;
+        distanceToHeldCargo += zoom * zoomSpeed * Time.deltaTime;
+		distanceToHeldCargo = Mathf.Clamp(distanceToHeldCargo, cargoMinDistanceHeld, cargoMaxDistanceHeld);
+        newOffset *= distanceToHeldCargo;
         if (isHoldingCargo)
         {
             cargo.transform.position = transform.position + newOffset;
@@ -154,10 +157,10 @@ public class ShipController : MonoBehaviour
 		//if is holding, drop cargo
 		if (!isHoldingCargo) {
 			RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 25))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, cargoPickupDistance))
             {
                 GameObject newCargo = hit.transform.gameObject;
-                distance = (hit.transform.position - transform.position).magnitude;
+                distanceToHeldCargo = (hit.transform.position - transform.position).magnitude;
                 if (newCargo.GetComponent<CargoController>() != null)
                 {
                     CargoController cargoCont = newCargo.GetComponent<CargoController>();
