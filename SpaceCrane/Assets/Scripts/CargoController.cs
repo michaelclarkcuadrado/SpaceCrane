@@ -62,10 +62,10 @@ public class CargoController : MonoBehaviour {
 		isPickupable = false;
 		gameObject.transform.position = cargoGoalSpace.transform.position;
 		gameObject.transform.rotation = cargoGoalSpace.transform.rotation;
+		GameController.instance.checkAllAcheived();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public bool achieved() {
+		return isAchieved;
 	}
 }
