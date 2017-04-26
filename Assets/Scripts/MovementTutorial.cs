@@ -26,16 +26,16 @@ public class MovementTutorial : MonoBehaviour {
     "And, if you ever forget these controls, they can all be found in the pause menu.", "Now that you know how to fly, it's time to complete our training course.", "Head through the door to continute." };
 
     private string[] script2 = {"Nicely done!", "Now, you're ready to start working.", "See that cargo crate in front of you?",
-    "Most of your job will consist of moving that from place to place.", "This one needs to go to a drop-off zon right behind the facility you just left.",
+    "Most of your job will consist of moving that from place to place.",
     "All of our cargo is made with state-of-the-art anti-theft technology.",
     "It's mostly to deter space pirates.", "What that means for you is that if you ever lose sight of the cargo while holding it, it will immediately teleport back to where you originally picked it up from.",
     "You can still put the cargo down and then move around no problem.", "But, if you ever lose sight of it while holding it, you'll have to go back and pick it up again.",
     "Now I'll tell you how to handle the cargo.", "The P key will attempt to pick up any cargo aligned with the crosshairs.", "You can also use P to drop any cargo you're holding.",
-    "Last lesson: you can move the cargo closer or further away with the period key and the comma key.", "Alright, champ, you're on your own!", "Good Luck!"};
+		"Last lesson: you can move the cargo closer or further away with the period key and the comma key.","This one needs to go to a drop-off zone right behind the facility you just left.", "Alright, champ, you're on your own!", "Good Luck!"};
 
     private float[] textTime1 = { 2, 3, 3.5f, 2, 3, 2, 4, 4, 7f, 2, 3, 5, 3, 2, 2, 8, 8, 8, 8, 8, 6, 6, 4, 4, 4 };
 
-    private float[] TextTime2 = { 1.5f, 2, 3, 3, 5, 3, 2, 8, 5, 6, 3, 6, 6, 8, 5 };
+    private float[] TextTime2 = { 1.5f, 2, 3, 3, 5, 3, 2, 8, 5, 6, 3, 6, 8, 6, 5 };
 	// Use this for initialization
 	void Start () {
         sc = player.GetComponent<ShipController>();
