@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MovementTutorial : MonoBehaviour {
     public GameObject player;
     public GameObject textObject;
+	public GameObject textBackground;
     public GameObject firstDoor;
     public GameObject lastDoor;
     public GameObject triggerArea1;
@@ -43,7 +44,6 @@ public class MovementTutorial : MonoBehaviour {
         movementEnabled = false;
 
         StartCoroutine(movementTutorial());
-
     }
 	
 	// Update is called once per frame
@@ -54,6 +54,7 @@ public class MovementTutorial : MonoBehaviour {
     IEnumerator movementTutorial()
     {  
         text.text = "";
+		textBackground.SetActive (true);
         yield return new WaitForSeconds(2);
         for (int i = 1; i < script1.Length; i++)
         {
@@ -82,11 +83,13 @@ public class MovementTutorial : MonoBehaviour {
             text.text = "";
             yield return new WaitForSeconds(.5f);
         }
+		textBackground.SetActive (false);
         text.text = "";
     }
 
     IEnumerator cargoTutorial()
     {
+		textBackground.SetActive (true);
         text.text = "";
         yield return new WaitForSeconds(1);
         for (int i = 1; i < script2.Length; i++)
@@ -99,6 +102,7 @@ public class MovementTutorial : MonoBehaviour {
             yield return new WaitForSeconds(.5f);
         }
         text.text = "";
+		textBackground.SetActive (false);
     }
 
     public void startCargoTutorial()
