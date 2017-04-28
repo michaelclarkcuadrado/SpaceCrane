@@ -70,7 +70,7 @@ public class ShipController : MonoBehaviour
             zR = roll*rotationSpeed*Time.deltaTime;
 
             //handle cargo interaction
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 dropOrPickupCargo();
             }
