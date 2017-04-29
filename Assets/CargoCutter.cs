@@ -17,7 +17,7 @@ public class CargoCutter : MonoBehaviour {
 	void Start () {
 		start = cargoStartPoint.transform;
 		end = cargoEndPoint.transform;
-		cargoKnife.transform.position = start.position;
+		//cargoKnife.transform.position = start.position;
 		isGoingForward = true;
 	}
 	

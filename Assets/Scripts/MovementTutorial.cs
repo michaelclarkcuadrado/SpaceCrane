@@ -35,7 +35,7 @@ public class MovementTutorial : MonoBehaviour {
 
     private float[] textTime1 = { 2, 3, 3.5f, 2, 3, 2, 4, 4, 7f, 2, 3, 5, 3, 2, 2, 8, 8, 8, 8, 8, 6, 6, 4, 4, 4 };
 
-    private float[] TextTime2 = { 1.5f, 2, 3, 3, 5, 3, 2, 8, 5, 6, 3, 6, 8, 6, 5 };
+    private float[] textTime2 = { 1.5f, 2, 3, 3, 5, 3, 2, 8, 5, 6, 3, 6, 8, 6, 5 };
 	// Use this for initialization
 	void Start () {
         sc = player.GetComponent<ShipController>();
@@ -96,7 +96,7 @@ public class MovementTutorial : MonoBehaviour {
         {
             print(script2[i]);
             text.text = script2[i];
-            yield return new WaitForSeconds(textTime1[i]);
+            yield return new WaitForSeconds(textTime2[i]);
             //yield return new WaitForSeconds(0);
             text.text = "";
             yield return new WaitForSeconds(.5f);
