@@ -9,6 +9,8 @@ using UnityEngine;
 public class CargoController : MonoBehaviour {
 
 	public GameObject cargoGoalSpace;
+    public Color color;
+
 	private Vector3 initialPosition;
 	private Quaternion initialRotation;
 	private bool isAchieved;
@@ -19,7 +21,13 @@ public class CargoController : MonoBehaviour {
 		isPickupable = true;
 		initialPosition = gameObject.transform.position;
 		initialRotation = gameObject.transform.rotation;
-	}
+
+        GetComponent<Renderer>().material.color = color;
+        Color goalColor = new Color(color.r, color.g, color.b, .5f);
+        cargoGoalSpace.GetComponent<Renderer>().material.color = goalColor;
+
+        print(cargoGoalSpace.GetComponent<Renderer>().material.color);
+    }
 
 	public void respawnCargo(){
 		if (!isAchieved) {

@@ -31,7 +31,7 @@ public class MovementTutorial : MonoBehaviour {
     "It's mostly to deter space pirates.", "What that means for you is that if you ever lose sight of the cargo while holding it, it will immediately teleport back to where you originally picked it up from.",
     "You can still put the cargo down and then move around no problem.", "But, if you ever lose sight of it while holding it, you'll have to go back and pick it up again.",
     "Now I'll tell you how to handle the cargo.", "The P key will attempt to pick up any cargo aligned with the crosshairs.", "You can also use P to drop any cargo you're holding.",
-		"Last lesson: you can move the cargo closer or further away with the period key and the comma key.","This one needs to go to a drop-off zone right behind the facility you just left.", "Alright, champ, you're on your own!", "Good Luck!"};
+	"Last lesson: you can push and pull the cargo with the period key and the comma key.","This one needs to go to a drop-off zone right behind the facility you just left.", "Alright, champ, you're on your own!", "Good Luck!"};
 
     private float[] textTime1 = { 2, 3, 3.5f, 2, 3, 2, 4, 4, 7f, 2, 3, 5, 3, 2, 2, 8, 8, 8, 8, 8, 6, 6, 4, 4, 4 };
 
