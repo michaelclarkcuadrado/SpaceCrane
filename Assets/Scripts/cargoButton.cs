@@ -9,7 +9,7 @@ public class cargoButton : MonoBehaviour {
 
 	void OnCollisionEnter(Collision c){
 		Debug.Log ("HIT");
-		if (c.gameObject.GetComponent<CargoController> () != null && isDisabled == false || c.gameObject.CompareTag("Player")) {
+		if ((c.gameObject.GetComponent<CargoController> () != null || c.gameObject.CompareTag("Player")) && isDisabled == false ) {
 			isDisabled = true;
 			foreach (GameObject o in objectsToDisable) {
 				o.SetActive (false);
@@ -18,7 +18,7 @@ public class cargoButton : MonoBehaviour {
 	}
 	
 	void OnCollisionExit(Collision c){
-		if (c.gameObject.GetComponent<CargoController> () != null && isDisabled == true || c.gameObject.CompareTag("Player")) {
+		if ((c.gameObject.GetComponent<CargoController> () != null || c.gameObject.CompareTag("Player")) && isDisabled == true) {
 			isDisabled = false;
 			foreach (GameObject o in objectsToDisable) {
 				o.SetActive (true);
