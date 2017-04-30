@@ -30,12 +30,12 @@ public class MovementTutorial : MonoBehaviour {
     "All of our cargo is made with state-of-the-art anti-theft technology.",
     "It's mostly to deter space pirates.", "What that means for you is that if you ever lose sight of the cargo while holding it, it will immediately teleport back to where you originally picked it up from.",
     "You can still put the cargo down and then move around no problem.", "But, if you ever lose sight of it while holding it, you'll have to go back and pick it up again.",
-    "Now I'll tell you how to handle the cargo.", "The P key will attempt to pick up any cargo aligned with the crosshairs.", "You can also use P to drop any cargo you're holding.",
-	"Last lesson: you can push and pull the cargo with the period key and the comma key.","This one needs to go to a drop-off zone right behind the facility you just left.", "Alright, champ, you're on your own!", "Good Luck!"};
+    "Now I'll tell you how to handle the cargo.", "The spacebar will attempt to pick up any cargo aligned with the crosshairs.", "You can also use P to drop any cargo you're holding.",
+	"Last lesson: you can push and pull the cargo with the period key and the comma key.","This one needs to go to a drop-off zone right in front of the facility you just left.", "Alright, champ, you're on your own!", "Good Luck!"};
 
     private float[] textTime1 = { 2, 3, 3.5f, 2, 3, 2, 4, 4, 7f, 2, 3, 5, 3, 2, 2, 8, 8, 8, 8, 8, 6, 6, 4, 4, 4 };
 
-    private float[] textTime2 = { 1.5f, 2, 3, 3, 5, 3, 2, 8, 5, 6, 3, 6, 8, 6, 5 };
+    private float[] textTime2 = { 1.5f, 2, 3, 3, 5, 3, 2, 8, 5, 6, 3, 6, 8, 6, 8, 8, 8, 8, 8 };
 	// Use this for initialization
 	void Start () {
         sc = player.GetComponent<ShipController>();
@@ -101,8 +101,8 @@ public class MovementTutorial : MonoBehaviour {
             text.text = "";
             yield return new WaitForSeconds(.5f);
         }
+        textBackground.SetActive(false);
         text.text = "";
-		textBackground.SetActive (false);
     }
 
     public void startCargoTutorial()

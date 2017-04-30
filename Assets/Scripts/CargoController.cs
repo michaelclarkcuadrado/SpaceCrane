@@ -22,6 +22,7 @@ public class CargoController : MonoBehaviour {
 		initialPosition = gameObject.transform.position;
 		initialRotation = gameObject.transform.rotation;
 
+        color.a = 1;
         GetComponent<Renderer>().material.color = color;
         Color goalColor = new Color(color.r, color.g, color.b, .5f);
         cargoGoalSpace.GetComponent<Renderer>().material.color = goalColor;
@@ -43,7 +44,11 @@ public class CargoController : MonoBehaviour {
 	public bool pickup(){
 		if (isPickupable) {
 			isPickupable = false;
-			return true;
+            color.a = .2f;
+            GetComponent<Renderer>().material.color = color;
+            print(
+        GetComponent<Renderer>().material.color);
+            return true;
 		} else {
 			return false;
 		}
@@ -51,8 +56,9 @@ public class CargoController : MonoBehaviour {
 
 	public bool putDown(){
 		if (!isPickupable) {
-			isPickupable = true;
-			return true;
+			isPickupable = true;color.a = 1;
+            GetComponent<Renderer>().material.color = color;
+            return true;
 		} else {
 			return false;
 		}
