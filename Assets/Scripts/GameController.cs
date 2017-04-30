@@ -39,6 +39,10 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene(++level);
 	}
 
+	public int getLevel(){
+		return level;
+	}
+
 	public void backToMainMenu(){
 		level = 0;
 		SceneManager.LoadScene (level);

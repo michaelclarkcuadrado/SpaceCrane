@@ -104,9 +104,8 @@ public class ShipController : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, transform.forward, out hit))
                 {
-					if (hit.transform.gameObject != cargo)
+					if (hit.transform.gameObject != cargo && hit.transform.gameObject.GetComponent<cargoButton>() != null)
                     { 
-                        Debug.Log(hit.transform.gameObject.name);
                         CargoController temp = cargo.GetComponent<CargoController>();
                         dropOrPickupCargo();
                         temp.respawnCargo();

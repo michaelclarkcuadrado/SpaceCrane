@@ -27,7 +27,7 @@ public class CargoController : MonoBehaviour {
         Color goalColor = new Color(color.r, color.g, color.b, .5f);
         cargoGoalSpace.GetComponent<Renderer>().material.color = goalColor;
 
-        print(cargoGoalSpace.GetComponent<Renderer>().material.color);
+        //print(cargoGoalSpace.GetComponent<Renderer>().material.color);
     }
 
 	public void respawnCargo(){
