@@ -28,6 +28,13 @@ public class ButtomUtils : MonoBehaviour {
         ControlMenu.SetActive(true);
     }
 
+    //Loads the mainmenu
+    public void MainMenuPressed()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadSceneAsync(0);
+    }
+
     //Exits the game
     public void ExitGame()
     {
