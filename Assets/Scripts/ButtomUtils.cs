@@ -42,6 +42,14 @@ public class ButtomUtils : MonoBehaviour {
         Application.Quit();
     }
 
+    //Reloads Level
+    public void ReloadLevel()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(GameController.instance.getLevel());
+    }
+
+    //Goes to Main menu()
     public void goToMainMenu()
     {
 		GameController.instance.backToMainMenu ();
