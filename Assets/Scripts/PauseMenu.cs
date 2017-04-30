@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Credit to Benno
 public class PauseMenu : MonoBehaviour
 {
     public enum Status
