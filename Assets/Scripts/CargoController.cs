@@ -46,8 +46,7 @@ public class CargoController : MonoBehaviour {
 			isPickupable = false;
             color.a = .2f;
             GetComponent<Renderer>().material.color = color;
-            print(
-        GetComponent<Renderer>().material.color);
+            //print(GetComponent<Renderer>().material.color);
             return true;
 		} else {
 			return false;
