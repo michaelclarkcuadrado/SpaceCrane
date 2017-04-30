@@ -39,5 +39,9 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene(++level);
 	}
 
+	public void backToMainMenu(){
+		level = 0;
+		SceneManager.LoadScene (level);
+	}
 
 }

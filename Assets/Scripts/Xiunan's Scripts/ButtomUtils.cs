@@ -32,7 +32,7 @@ public class ButtomUtils : MonoBehaviour {
     public void MainMenuPressed()
     {
         Time.timeScale = 1;
-        SceneManager.LoadSceneAsync(0);
+		GameController.instance.backToMainMenu ();
     }
 
     //Exits the game
