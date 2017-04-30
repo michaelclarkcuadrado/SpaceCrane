@@ -44,6 +44,6 @@ public class ButtomUtils : MonoBehaviour {
 
     public void goToMainMenu()
     {
-        SceneManager.LoadScene(0);
+		GameController.instance.backToMainMenu ();
     }
 }

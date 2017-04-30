@@ -23,7 +23,7 @@ public class MovementTutorial : MonoBehaviour {
     "What's that? You don't even know the controls?", "Wow, HR is really getting sloppy...", "It's okay, I'll teach you.", "The arrow keys can be used to look around.",
     "Use W and S to move forward and backwards.", "A and D will move you side to side.", "R and F will move you upwards and downwards",
     "If you want to roll, use Q and E", "And remember, all controls are relative to your current orientation.", "In space there's no such thing as up or down!",
-    "And, if you ever forget these controls, they can all be found in the pause menu.", "Now that you know how to fly, it's time to complete our training course.", "Head through the door to continute." };
+    "And, if you ever forget these controls, they can all be found in the pause menu.", "Now that you know how to fly, it's time to complete our training course.", "Head through the door to continue." };
 
     private string[] script2 = {"Nicely done!", "Now, you're ready to start working.", "See that cargo crate in front of you?",
     "Most of your job will consist of moving that from place to place.",
@@ -35,7 +35,7 @@ public class MovementTutorial : MonoBehaviour {
 
     private float[] textTime1 = { 2, 3, 3.5f, 2, 3, 2, 4, 4, 7f, 2, 3, 5, 3, 2, 2, 8, 8, 8, 8, 8, 6, 6, 4, 4, 4 };
 
-    private float[] textTime2 = { 1.5f, 2, 3, 3, 5, 3, 2, 8, 5, 6, 3, 6, 8, 6, 8, 8, 8, 8, 8 };
+    private float[] textTime2 = { 1.5f, 2, 3, 3, 5, 3, 15, 8, 5, 6, 3, 6, 8, 6, 8, 8, 8, 8, 8 };
 	// Use this for initialization
 	void Start () {
         sc = player.GetComponent<ShipController>();
@@ -58,8 +58,8 @@ public class MovementTutorial : MonoBehaviour {
         yield return new WaitForSeconds(2);
         for (int i = 1; i < script1.Length; i++)
         {
-            print("Displaying text# " + i);
-            print(script1[i]);
+            //print("Displaying text# " + i);
+            //print(script1[i]);
             text.text = script1[i];
             switch (i)
             {
@@ -94,7 +94,7 @@ public class MovementTutorial : MonoBehaviour {
         yield return new WaitForSeconds(1);
         for (int i = 1; i < script2.Length; i++)
         {
-            print(script2[i]);
+            //print(script2[i]);
             text.text = script2[i];
             yield return new WaitForSeconds(textTime2[i]);
             //yield return new WaitForSeconds(0);
