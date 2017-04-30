@@ -41,4 +41,9 @@ public class ButtomUtils : MonoBehaviour {
 		Debug.Log ("Game exited.");
         Application.Quit();
     }
+
+    public void goToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
