@@ -38,6 +38,7 @@ public class PauseMenu : MonoBehaviour
 
     void Open()
     {
+		Screen.lockCursor = false;
         Time.timeScale = 0;
         status = Status.Active;
         UIPanel.SetActive(true);
@@ -48,6 +49,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         status = Status.Inactive;
         UIPanel.SetActive(false);
+		Screen.lockCursor = true;
     }
 }
 

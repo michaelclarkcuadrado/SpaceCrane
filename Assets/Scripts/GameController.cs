@@ -46,6 +46,7 @@ public class GameController : MonoBehaviour {
 	public void backToMainMenu(){
 		level = 0;
 		SceneManager.LoadScene (level);
+		Screen.lockCursor = false;
 	}
 
 }

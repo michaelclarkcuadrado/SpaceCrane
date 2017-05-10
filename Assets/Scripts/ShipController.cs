@@ -40,12 +40,14 @@ public class ShipController : MonoBehaviour
 		lr = cargoCrane.GetComponent<LineRenderer> ();
 		lr.positionCount = 0;
         movementEnabled = true;
+		Screen.lockCursor = false;
+		Screen.lockCursor = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //handle camera shake effect
+		//handle camera shake effect
         if (isCameraShaking)
         {
             transform.localPosition = beforeShakeCameraPos + Random.insideUnitSphere * 0.7f;
@@ -70,13 +72,14 @@ public class ShipController : MonoBehaviour
             zR = roll*rotationSpeed*Time.deltaTime;
 
             //handle cargo interaction
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 dropOrPickupCargo();
             }
         }
 
     }
+
 
 	public void cameraShake(float duration){
 		isCameraShaking = true;

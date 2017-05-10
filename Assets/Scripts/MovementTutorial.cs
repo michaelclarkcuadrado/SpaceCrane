@@ -21,18 +21,18 @@ public class MovementTutorial : MonoBehaviour {
     "It looks like you don't have your pilot license yet.", "Not sure how you got hired...", "Well, anyway, we need a pilot, so you're going to be okay.",
     "You just need to complete our pilot training program first.", "That means you can't leave yet, so let me close the exit...",
     "Now, I can unlock your ship...", "Ok now you should be able to move around", "Why don't you try flying around, just to get the hang of it.",
-    "What's that? You don't even know the controls?", "Wow, HR is really getting sloppy...", "It's okay, I'll teach you.", "The arrow keys can be used to look around.",
+    "What's that? You don't even know the controls?", "Wow, HR is really getting sloppy...", "It's okay, I'll teach you.", "The mouse can be used to look around.",
     "Use W and S to move forward and backwards.", "A and D will move you side to side.", "R and F will move you upwards and downwards",
     "If you want to roll, use Q and E", "And remember, all controls are relative to your current orientation.", "In space there's no such thing as up or down!",
-    "And, if you ever forget these controls, they can all be found in the pause menu.", "Now that you know how to fly, it's time to complete our training course.", "Head through the door to continue." };
+    "And, if you ever forget these controls, they can all be found in the pause menu.", "Now that you know how to fly, it's time to complete our training course.", "Head through the door in front of you to continue." };
 
     private string[] script2 = {"Nicely done!", "Now, you're ready to start working.", "See that cargo crate in front of you?",
     "Most of your job will consist of moving that from place to place.",
     "All of our cargo is made with state-of-the-art anti-theft technology.",
     "It's mostly to deter space pirates.", "What that means for you is that if you ever lose sight of the cargo while holding it, it will immediately teleport back to where you originally picked it up from.",
     "You can still put the cargo down and then move around no problem.", "But, if you ever lose sight of it while holding it, you'll have to go back and pick it up again.",
-    "Now I'll tell you how to handle the cargo.", "The spacebar will attempt to pick up any cargo aligned with the crosshairs.", "You can also use the spacebar to drop any cargo you're holding.",
-	"Last lesson: you can push and pull the cargo with the period key and the comma key.","This one needs to go to a drop-off zone right in front of the facility you just left.", "Alright, champ, you're on your own!", "Good Luck!"};
+    "Now I'll tell you how to handle the cargo.", "A click will attempt to pick up any cargo aligned with the crosshairs.", "You can also use the mouse to drop any cargo you're holding.",
+	"Last lesson: you can push and pull the cargo with the scrollwheel.","This one needs to go the red drop-off zone right in front of the facility you just left.", "Alright, champ, you're on your own!", "Good Luck!"};
 
     private float[] textTime1 = { 2, 3, 3.5f, 2, 3, 2, 4, 4, 7f, 2, 3, 5, 3, 2, 2, 8, 8, 8, 8, 8, 6, 6, 4, 4, 4 };
 
@@ -82,7 +82,7 @@ public class MovementTutorial : MonoBehaviour {
 
 	            }
 	            print(textTime1[i]);
-	            yield return new WaitForSeconds(textTime1[i]);
+	            yield return new WaitForSeconds(textTime1[i] * 0.8f);
 	            //yield return new WaitForSeconds(0);
 	            text.text = "";
 	            yield return new WaitForSeconds(.5f);
